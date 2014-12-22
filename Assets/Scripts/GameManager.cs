@@ -51,7 +51,30 @@ public class GameManager : MonoBehaviour
 			
 			coinManager = coinObject.GetComponent<CoinManager>().Init(PlayerPrefs.GetInt("CoinCount"), time);
 			levelManager = levelObject.GetComponent<LevelManager>().Init();
-			//TODO: WE HAVE PLAYED BEFORE ACCESS THE DATA FROM OUR LAST SAVE
+			levelManager.AddExperience = PlayerPrefs.GetInt("PlayerXP");
+			coinManager.Jackpot = PlayerPrefs.GetInt("Jackpot");
+			freeThrowCount = PlayerPrefs.GetInt("Freethrows");
+
+			LoadBoard();
+		}
+	}
+	private void LoadBoard()
+	{
+		string [] coinType = PlayerPrefsX.GetStringArray("CoinTypes");
+		Vector3[] coinPos = PlayerPrefsX.GetVector3Array("CoinPositions");
+		Vector3[] coinRot = PlayerPrefsX.GetVector3Array("CoinRotation");
+
+		for (int i = 0; i < coinPos.Length; i++) 
+		{
+			switch(coinType[i])
+			{
+				case "goldCoin":
+				{
+					GameObject Spwnd = Instantiate(coin, coinPos[i], 
+				                          new Quaternion(coinRot[i].x, coinRot[i].y, coinRot[i].z,0)) as GameObject;
+					break;
+				}
+			}
 		}
 	}
 	void Awake()

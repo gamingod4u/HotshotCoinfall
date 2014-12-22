@@ -7,19 +7,19 @@ public class SaveManager : MonoBehaviour
 
 	public GameObject 		coinHolder;
 	
-	private float 			playerXP = 0f;
+	private int 			playerXP = 0;
 	private int 			playerLevel = 0;
 	private int 			coinCount = 0;
 	private int 			freeThrows = 0;
 	private int 			jackpotCount = 0;
 	
-	public bool   		isQuiting = false;
+	public 	bool   			isQuiting = false;
 	
-	public float 		playerPoints = 0f;
+	public 	float 			playerPoints = 0f;
 	
-	public GameObject [] coinsInScene;
+	public 	GameObject [] 	coinsInScene;
 	
-	public float PlayerXP
+	public int PlayerXP
 	{
 		get{return playerXP;}
 		set{playerXP = value;}
@@ -48,31 +48,36 @@ public class SaveManager : MonoBehaviour
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		DontDestroyOnLoad(this);
 		instance = this;
-		
-		
-		
 	}
 	
 	// Update is called once per frame
-	void QuitGame () 
+	void OnApplicationQuit () 
 	{
-		if(isQuiting)
+		coinsInScene = GameObject.FindGameObjectsWithTag("coin");
+		string  [] coinType = new string[coinsInScene.Length];
+		Vector3 [] coinPositions = new Vector3[coinsInScene.Length];
+		Vector3 [] coinsRotations = new Vector3[coinsInScene.Length];
+		for(int i = 0; i < coinsInScene.Length; i++)
 		{
-			coinsInScene = GameObject.FindGameObjectsWithTag("coin");
-			Vector3 [] coinPositions = new Vector3[coinsInScene.Length];
-			
-			for(int i = 0; i < coinsInScene.Length; i++)
-			{
-				coinPositions[i] = coinsInScene[i].transform.position;
-			}
-		
-			PlayerPrefs.SetFloat("Time", Time.time);
-			PlayerPrefs.SetFloat("PlayerXP", PlayerXP);
-			PlayerPrefs.SetInt("Coins", CoinCount);
-			PlayerPrefs.SetInt("Freethrows", FreeThorws);
-			PlayerPrefs.SetInt("Jackpot", JackPot);
-			PlayerPrefsX.SetVector3Array("CoinPositions", coinPositions);
-			Application.Quit();
+			coinType[i] = coinsInScene[i].transform.name;
+			coinPositions[i] = coinsInScene[i].transform.position;
+			coinsRotations[i] = new Vector3(	coinsInScene[i].transform.rotation.x, 
+		                               		coinsInScene[i].transform.rotation.y, 
+		                               		coinsInScene[i].transform.rotation.z);
 		}
+	
+		PlayerPrefs.SetFloat("Time", Time.time);
+		PlayerPrefs.SetInt("PlayerXP", PlayerXP);
+		PlayerPrefs.SetInt("Coins", CoinCount);
+		PlayerPrefs.SetInt("Freethrows", FreeThorws);
+		PlayerPrefs.SetInt("Jackpot", JackPot);
+		PlayerPrefsX.SetStringArray("CoinTypes", coinType);
+		PlayerPrefsX.SetVector3Array("CoinPositions", coinPositions);
+		PlayerPrefsX.SetVector3Array("CoinRotations", coinsRotations);
+	}
+	void OnApplicationPause(bool paused)
+	{
+		if(paused)
+			Application.Quit();
 	}
 }

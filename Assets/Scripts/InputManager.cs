@@ -50,10 +50,7 @@ public class InputManager : MonoBehaviour
 		{
 			GetTouch ();
 		}
-		else if(Input.GetKeyDown(KeyCode.Escape))
-		{
-		  Application.Quit();
-		}		
+	
 		if(getFlickTime)
 			flickTime+=Time.deltaTime;
 	}
