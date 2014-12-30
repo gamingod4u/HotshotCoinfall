@@ -20,7 +20,8 @@ public class goldCoin : MonoBehaviour
 		
 		LevelObject = GameObject.FindGameObjectWithTag("levelManager");
 		levelManager = LevelObject.GetComponent<LevelManager>();
-		
+
+		this.transform.parent = CoinHolder.transform;
 	}
 	
 	void Update()
@@ -30,7 +31,6 @@ public class goldCoin : MonoBehaviour
 	
 	void OnCollisionEnter(Collision other)
 	{
-		Debug.Log(other.transform.name);
 		switch(other.transform.name)
 		{
 			case "Zero":

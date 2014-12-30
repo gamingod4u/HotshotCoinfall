@@ -3,11 +3,15 @@ using System.Collections;
 
 public class LevelManager : MonoBehaviour 
 {
+
+	public delegate void LevelUp();
+	public static event LevelUp OnLevelUp;
+
 	private const int 	MAXLEVEL  = 50;
 	private const float MINBAR = .01f;
 	private const float	MAXBAR = 64;
 	
-	private int [] 	levelXPGoals;
+	private int [] 		levelXPGoals;
 	private float 		newBar = 0f;
 	private float 		newGoal = 0f;
 	private float 		goalDifference = 0f;
@@ -65,6 +69,8 @@ public class LevelManager : MonoBehaviour
 			lastLevel = currentLevel;
 			currentLevel++;
 			UIManager.instance.Level = currentLevel;
+			if(OnLevelUp != null)
+				OnLevelUp();
 		}	
 		if(currentLevel != lastLevel)
 		{

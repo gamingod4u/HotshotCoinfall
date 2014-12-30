@@ -57,14 +57,14 @@ public class InputManager : MonoBehaviour
 	
 	private void GetAngle()
 	{
-		flickAngle = Camera.main.WorldToViewportPoint(new Vector3(endPosition.x, endPosition.y + 800.0f, ((camera.nearClipPlane - 100f) * 1.8f)));
+		flickAngle = Camera.main.ScreenToWorldPoint(new Vector3(endPosition.x, endPosition.y + 800.0f, ((camera.nearClipPlane - 100f) * 1.8f)));
 	}
 	
 	private void GetTouch()
 	{
 		Touch touch = Input.GetTouch(0);
 		
-		
+
 		switch(touch.phase)
 		{
 			case TouchPhase.Began:
@@ -83,9 +83,9 @@ public class InputManager : MonoBehaviour
 					getFlickTime = false;
 					GetAngle();
 					
-					float distance = Vector3.Distance(startPosition, endPosition);
-					
-					if(distance > 5.0f && OnFlick != null)
+					float distance = (endPosition.y - startPosition.y);
+									
+					if(distance > 40.0f && OnFlick != null)
 					{
 						OnFlick(flickAngle, flickTime);
 						flickAngle = Vector3.zero;
@@ -93,11 +93,12 @@ public class InputManager : MonoBehaviour
 					}
 					else if(distance < 1.0f)
 					{
+						
 						getFlickTime = false;
 						ray = Camera.main.ScreenPointToRay(touch.position);
 						if(Physics.Raycast(ray, out rayHit))
 						{
-							SwitchTap(rayHit.transform.name, touch.position);
+							SwitchTap(rayHit.transform.name, rayHit.point);
 						}
 					}
 				}
