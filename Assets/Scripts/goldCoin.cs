@@ -43,7 +43,7 @@ public class goldCoin : MonoBehaviour
 			{
 				coinManager.Coins++;
 				coinManager.Combo++;
-				levelManager.AddExperience += 2 * coinManager.Combo;
+				levelManager.Experience += 2 * coinManager.Combo;
 				Destroy(this.gameObject);
 				break;
 			}
@@ -51,7 +51,7 @@ public class goldCoin : MonoBehaviour
 			{
 				coinManager.Coins++;
 				coinManager.Combo++;
-				levelManager.AddExperience += 3 * coinManager.Combo;
+				levelManager.Experience += 3 * coinManager.Combo;
 				Destroy(this.gameObject);
 				break;
 			}
@@ -59,7 +59,7 @@ public class goldCoin : MonoBehaviour
 			{
 				coinManager.Coins++;
 				coinManager.Combo++;
-				levelManager.AddExperience += 5 * coinManager.Combo;
+				levelManager.Experience += 5 * coinManager.Combo;
 				Destroy(this.gameObject);
 				break;
 			}

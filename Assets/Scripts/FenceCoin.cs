@@ -4,9 +4,6 @@ using System.Collections;
 public class FenceCoin : MonoBehaviour 
 {	
 
-
-
-
 	private BonusCoinManger bonusCoinManager;
 	private GameObject coinholder;
 
@@ -26,7 +23,11 @@ public class FenceCoin : MonoBehaviour
 
 		switch(other.transform.name)
 		{
-	
+			case "Zero":
+			{	
+				Destroy(this.gameObject);
+				break;
+			}
 			case "Two" :
 			{
 				bonusCoinManager.RaiseFences(10);

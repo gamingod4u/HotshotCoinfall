@@ -15,12 +15,12 @@ public class BonusCoinManger : MonoBehaviour
 	private Vector3     fencesEndPos; 
 	private float 	  	fenceTimer = 0;
 	private float 	  	percentTimer = 0;
-	private float     	fenceMaxTime = 600;
-	private float 	 	percentMaxTime = 360;
+	private float     	fenceMaxTime = 360;
+	private float 	 	percentMaxTime = 240;
 	private float 		fenceRaisedTimer = 0;
 	private float 		fenceRaisedTime = 0;
 	private bool 		fenceUp = false;
-	private int 		comboCount = 0;
+	public int 			comboCount = 0;
 	#endregion
 
 	#region Unity Functions
@@ -50,10 +50,10 @@ public class BonusCoinManger : MonoBehaviour
 			comboCount = coinManager.Combo;
 		}
 
-		if(comboCount != 0 && coinManager.Combo == 0)
+		if(comboCount != 0 && coinManager.Combo == 1)
 		{
 			fenceTimer = 0;
-			percentMaxTime = 0;
+			percentTimer = 0;
 			ComboSpawn();
 		}
 		else
@@ -61,11 +61,7 @@ public class BonusCoinManger : MonoBehaviour
 			GetFenceTime();
 			GetPercentTime();
 		}
-
-		if(Input.GetKeyDown(KeyCode.D))
-		{
-			RaiseFences(10);
-		}
+ 
 		if(fenceUp && fenceRaisedTimer < fenceRaisedTime)
 		{
 			fenceRaisedTimer += Time.deltaTime;
@@ -152,7 +148,6 @@ public class BonusCoinManger : MonoBehaviour
 
 			comboCount = 0;
 		}
-		
 	}
 
 	void GetCoins()

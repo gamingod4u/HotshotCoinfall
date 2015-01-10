@@ -74,7 +74,7 @@ public class CoinManager : MonoBehaviour
 	{
 		if(coinsCount < MAXCOINS)
 			recoupCoins = true;
-		else if(coinsCount > MAXCOINS)
+		else if(coinsCount >= MAXCOINS)
 			recoupCoins = false;
 		
 		if(coinsCount <= MINCOINS)
@@ -90,7 +90,7 @@ public class CoinManager : MonoBehaviour
 		else if(recoupTime >= RECOUPMINUTE)
 		{
 			recoupTime = 0;
-			coinsCount++;
+			//coinsCount++;
 		}
 		
 		if(coinCombo > 1 && comboTime < 3)

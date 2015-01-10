@@ -21,9 +21,12 @@ public class LevelManager : MonoBehaviour
 	private int 		lastLevel = 0;
 	private int			nextLevelXP = 0;
 	
+	public int Level
+	{
+		get{return currentLevel;}
+	}
 	
-	
-	public int AddExperience
+	public int Experience
 	{
 		get{return currentXP;}
 		set{currentXP = value;}
@@ -46,7 +49,7 @@ public class LevelManager : MonoBehaviour
 	public LevelManager Init () 
 	{
 	
-		currentXP = AddExperience;		
+		currentXP = Experience;		
 		levelXPGoals = new int[MAXLEVEL];
 		for(int i = 0; i < MAXLEVEL; i++)
 		{
@@ -62,8 +65,6 @@ public class LevelManager : MonoBehaviour
 	
 	void UpdateLevel()
 	{
-		
-	
 		if(currentXP >= levelXPGoals[currentLevel])
 		{	
 			lastLevel = currentLevel;

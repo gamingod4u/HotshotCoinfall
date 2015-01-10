@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 using System.Collections;
 
 public class GameManager : MonoBehaviour 
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
 		if(PlayerPrefs.GetInt("FirstPlay") == 0)
 		{
 			PlayerPrefs.SetInt("FirstPlay", 1);
-			coinManager = coinObject.GetComponent<CoinManager>().Init(40,0f);
+			coinManager = coinObject.GetComponent<CoinManager>().Init(200,0f);
 			levelManager = levelObject.GetComponent<LevelManager>().Init();
 		}
 		else
@@ -59,9 +59,9 @@ public class GameManager : MonoBehaviour
 			float time = Time.time - lastTime;
 			
 			//coinManager = coinObject.GetComponent<CoinManager>().Init(PlayerPrefs.GetInt("CoinCount"), time);
-			coinManager = coinObject.GetComponent<CoinManager>().Init(40,0f);
+			coinManager = coinObject.GetComponent<CoinManager>().Init(200,0f);
 			levelManager = levelObject.GetComponent<LevelManager>().Init();
-			levelManager.AddExperience = PlayerPrefs.GetInt("PlayerXP");
+			levelManager.Experience = PlayerPrefs.GetInt("PlayerXP");
 			coinManager.Jackpot = PlayerPrefs.GetInt("Jackpot");
 			freeThrowCount = PlayerPrefs.GetInt("Freethrows");
 
@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
 		{
 			coinManager.Coins -= 1;
 			float newX = Mathf.Clamp(position.x, -1.75f,1.75f);
-			GameObject Spwnd = Instantiate(coin, new Vector3( newX, position.y * .002f, 1.7f), coin.transform.rotation)as GameObject;
+			GameObject Spwnd = Instantiate(coin, new Vector3( newX, position.y *.003f, 1.9f), Quaternion.identity)as GameObject;
 			
 		}
 	}
@@ -168,7 +168,7 @@ public class GameManager : MonoBehaviour
 			if(freeThrow && freeThrowCount > 0)
 			{
 				freeThrowCount -= 1;
-				GameObject Spwnd = Instantiate(basketball, shootingPosition.transform.position, Quaternion.identity)as GameObject;
+				GameObject Spwnd = Instantiate(basketball, shootingPosition.transform.position, basketball.transform.rotation)as GameObject;
 				float speed = GetSpeed(time);
 				Spwnd.rigidbody.AddForce(new Vector3((angle.x * speed), (angle.y * speed), (angle.z * speed)));	
 			}
@@ -177,7 +177,7 @@ public class GameManager : MonoBehaviour
 				coinManager.Coins -=1;
 				GameObject Spwnd = Instantiate(coin, shootingPosition.transform.position, Quaternion.identity)as GameObject;
 				float speed = GetSpeed(time);
-				Spwnd.rigidbody.AddForce(new Vector3(((angle.x * speed)*.9f), ((angle.y * speed)*.15f), (angle.z * speed)*.2f));
+				Spwnd.rigidbody.AddForce(new Vector3((angle.x * speed), ((angle.y * speed)*.6f), (angle.z * speed)*.25f));
 			}
 		}	
 	}
